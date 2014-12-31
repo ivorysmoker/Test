@@ -1,0 +1,9 @@
+#Container{
+	margin: 0 auto;
+	width: 1280px;
+}
+#SpielFeld{
+	height: 1000px;
+	width: 1000px;
+	background: grey;
+} 

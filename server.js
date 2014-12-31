@@ -14,7 +14,7 @@ var express = require('express'),
 	GekaufeArtikel = {};
 server.listen(1339);
 console.log("Server Online");
-var mysql = require('mysql');
+//var mysql = require('mysql');
 var fs = require('fs');
 var path = require('path');
 // wenn der Pfad / aufgerufen wird
