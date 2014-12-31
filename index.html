@@ -71,26 +71,50 @@
 		float: left;
 		height: 20%;
 		width: 100%;
-		margin-top: 150%;
+		margin-top: 142%;
 		}
+                #Feld1_Hotel, #Feld3_Hotel, #Feld4_Hotel {
+                    background-color: red;
+                }
+                #Feld6_Hotel, #Feld7_Hotel, #Feld9_Hotel {
+                    background-color: yellow;
+                }
 		#Feld11_Hotel, #Feld12_Hotel, #Feld14_Hotel, #Feld16_Hotel, #Feld18_Hotel, #Feld19_Hotel{
 		border-left: 1px solid #333333;
 		float: right;
 		height: 100%;
 		width: 20%;
 		}
+                #Feld16_Hotel, #Feld18_Hotel, #Feld19_Hotel {
+                    background-color: #ff00cc
+                }
+                #Feld11_Hotel, #Feld12_Hotel, #Feld14_Hotel {
+                    background-color: orange;
+                }
 		#Feld21_Hotel, #Feld22_Hotel, #Feld24_Hotel, #Feld27_Hotel, #Feld29_Hotel{
 		border-bottom: 1px solid #333333;
 		float: left;
 		height: 20%;
 		width: 100%;
 		}
+                #Feld27_Hotel, #Feld29_Hotel {
+                  background-color: purple;  
+                } 
+                #Feld21_Hotel, #Feld22_Hotel, #Feld24_Hotel {
+                    background-color: lightskyblue;
+                }
 		#Feld31_Hotel, #Feld32_Hotel, #Feld34_Hotel, #Feld37_Hotel, #Feld39_Hotel{
 		border-right: 1px solid #333333;
 		float: left;
 		height: 100%;
 		width: 20%;
 		}
+                #Feld31_Hotel, #Feld32_Hotel, #Feld34_Hotel {
+                    background-color: green;
+                }
+                #Feld37_Hotel, #Feld39_Hotel {
+                    background-color: blue;
+                }
 		#TopSpielFeldReihe{
 		float: left;
 		width: 100%;
@@ -126,8 +150,119 @@
 		.UserListOnline {
 		 float: left;
 		 width: 280px;
-		 height: 800px;
+		 height: 500px;
+                 border: 1px solid;
 		}
+                #menu {
+                    float: left;
+                }
+                .chatdiv {
+                    height: 400px;
+                    width: 500px;
+                }
+                #player1feld, #player2feld, #player3feld, #player4feld {
+                    height: 60px;
+                    width: 100%;
+                    border-bottom: 1px solid;                  
+                }
+                #player1image, #player2image, #player3image, #player4image{
+                    height: 100%;
+                    width: 25%;
+                    border-right: 1px solid;
+                    float: left;
+                    text-align: center;
+                }
+                #player1name, #player2name, #player3name, #player4name {
+                    height: 30%;
+                    border-bottom: 1px solid;
+                    width: 74.648%;
+                    float: right;                   
+                 }
+                 #player1money, #player2money, #player3money, #player4money {
+                     height: 100%;
+                     width: 28%;
+                     float: right;
+                     border-left: 1px solid;
+                     text-align: center;
+                 }              
+                  
+                 #player1status, #player2status, #player3status, #player4status {
+                     height: 58%;
+                     width: 74.6488%;
+                     float: right;
+                     padding-top: 6px;
+                 }
+              
+                 #fieldgroup1_1, #fieldgroup1_2 {
+                    width: 10px;
+                    height: 10px;
+                    background-color: purple;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup2_1, #fieldgroup2_2, #fieldgroup2_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: lightskyblue;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup3_1, #fieldgroup3_2, #fieldgroup3_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: #ff00cc;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup4_1, #fieldgroup4_2, #fieldgroup4_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: orange;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup5_1, #fieldgroup5_2, #fieldgroup5_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup6_1, #fieldgroup6_2, #fieldgroup6_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: yellow;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup7_1, #fieldgroup7_2, #fieldgroup7_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: green;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup8_1, #fieldgroup8_2 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: blue;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup9_1, #fieldgroup9_2, #fieldgroup9_3, #fieldgroup9_4 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: black;
+                    margin: 2px;
+                    float: left;
+                 }
+                   #fieldgroup10_1, #fieldgroup10_2 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: grey;
+                    margin: 2px;
+                    float: left;
+                 }
 		</style>
 		</head>
 		<body>
@@ -160,25 +295,57 @@
 		
 		
 		<div class="UserListOnline">
-            <h3>Online Users</h3>
+                    <div id="player1feld">
+                        <div id="player1image"> xXx</div>
+                        <div id="player1name">p1
+                            <div id="player1money">$ 1500</div></div>
+                        <div id="player1status">
+                            <div id="fieldgroup1_1"></div><div id="fieldgroup1_2"></div>
+                            <div id="fieldgroup2_1"></div><div id="fieldgroup2_2"></div><div id="fieldgroup2_3"></div>
+                            <div id="fieldgroup3_1"></div><div id="fieldgroup3_2"></div><div id="fieldgroup3_3"></div>
+                            <div id="fieldgroup4_1"></div><div id="fieldgroup4_2"></div><div id="fieldgroup4_3"></div>
+                            <div id="fieldgroup5_1"></div><div id="fieldgroup5_2"></div><div id="fieldgroup5_3"></div>
+                            <div id="fieldgroup6_1"></div><div id="fieldgroup6_2"></div><div id="fieldgroup6_3"></div>
+                            <div id="fieldgroup7_1"></div><div id="fieldgroup7_2"></div><div id="fieldgroup7_3"></div>
+                            <div id="fieldgroup8_1"></div><div id="fieldgroup8_2"></div>
+                            <div id="fieldgroup9_1"></div><div id="fieldgroup9_2"></div><div id="fieldgroup9_3"></div><div id="fieldgroup9_4"></div>
+                            <div id="fieldgroup10_1"></div><div id="fieldgroup10_2"></div>
+                        </div>
+                    </div>
+                     <div id="player2feld">
+                        <div id="player2image"></div>
+                        <div id="player2name">p2
+                        <div id="player2money">$ 1500</div></div>
+                        <div id="player2status"></div>
+                    </div>
+                    <div id="player3feld">
+                        <div id="player3image"></div>
+                        <div id="player3name">p3
+                        <div id="player3money">$ 1500</div></div>
+                        <div id="player3status"></div>
+                    </div>
+                    <div id="player4feld">
+                        <div id="player4image"></div>
+                        <div id="player4name">p4
+                        <div id="player4money">$ 1500</div></div>
+                        <div id="player4status"></div>
+                    </div>
             <div id="usersOnline"></div>
 			
         </div>
 		
-		<div id="OptionBar">
-		<button id="StartEvent">Start</button>
-		</div>
+	
 		
 		<div id="menu">
-			<button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
+<button id="StartEvent">Start</button><button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
 		</div>
-		
-		<h2>Chat</h2>
+           <div class="chatdiv">
         <div id="chat" style="float: left; height:300px; width: 500px; border: 1px solid silver; overflow: scroll;"></div>
         <form id="send-form">
         <input id="message">
         <input type="submit">
-        </form>
+        </form></div>
+        
 		</div>
 		</body>
 </html>
