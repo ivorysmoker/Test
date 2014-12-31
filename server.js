@@ -42,7 +42,7 @@ console.log("Ein Benutzer ist wiedergekehrt und hat die POS"+ pos);
 socket.nickname = BenutzerIpName[pos];
 socket.PlayerActive = 0;
 socket.PlayerPosition = 0;
-socket.PlayerCash = 1000;
+socket.PlayerCash = 1500;
 OnlineUsers[socket.nickname] = socket;
 updateNicknamesOnline();
 }
@@ -132,7 +132,8 @@ updateNicknamesOnline();
 		}
 
 		if(num1 === num2) {
-			socket.paschcounter = socket.paschcounter + 1;			console.log("Pasch! Next");
+			socket.paschcounter = socket.paschcounter + 1;
+			console.log("Pasch! Next");
 			//console.log("pasch juhu darf nochma!"+socket.paschcounter);
 			if (socket.paschcounter === 3) {
 			    console.log("ab ins jail mit dir!");	
