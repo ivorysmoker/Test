@@ -354,10 +354,10 @@
 <script>
          jQuery(function($){
 		 var $usersOnline = $('#usersOnline');
-		 var $player1name = $('#player1name');
-                 var $player2name = $('#player2name');
-                 var $player3name = $('#player3name');
-                 var $player4name = $('#player4name');
+		 var player1name = $('#player1name');
+                 var player2name = $('#player2name');
+                 var player3name = $('#player3name');
+                 var player4name = $('#player4name');
 		 var $form = $('#send-form');
          var $message = $('#message');
          var $chatbox = $('#chat');
@@ -413,10 +413,10 @@
                        html += data[i] + '</br>';
                    }
                    //$usersOnline.html(html);
-                   $player1name.html(data[0]);
-                   $player2name.html(data[1]);
-                   $player3name.html(data[2]);
-                   $player4name.html(data[3]);
+                   player1name.html(data[0]);
+                   player2name.html(data[1]);
+                   player3name.html(data[2]);
+                   player4name.html(data[3]);
                 });
 				
 				socket.on('ServerMessege', function(data){
