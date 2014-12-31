@@ -1,0 +1,291 @@
+<html>
+    <head>
+        <title>Node.js Testing</title>
+        <meta charset="utf-8">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<style>
+		#container{
+		margin: 0 auto;
+		width: 1280px;
+		}
+		#SpielFeld{
+		width: 1000px;
+		height: 1000px;
+		float:left;
+		border: 1px solid #333333;
+		background-color: #ade8ca;
+		}
+		#Feld1, #Feld2, #Feld3, #Feld4, #Feld5, #Feld6, #Feld7, #Feld8, #Feld9{
+		width: 7.77%;
+		height: 100%;
+		border-right: 1px solid #333333;
+		float:left;
+		}
+		#Feld11, #Feld12, #Feld13, #Feld14, #Feld15, #Feld16, #Feld17, #Feld18, #Feld19{
+		width: 100%;
+		height: 9.0132%;
+		border-bottom: 1px solid #333333;
+		}
+		#Feld21, #Feld22, #Feld23, #Feld24, #Feld25, #Feld26, #Feld27, #Feld28, #Feld29{
+		width: 9.07%;
+		height: 100%;
+		border-right: 1px solid #333333;
+		float: left;
+		} 	
+		#Feld31, #Feld32, #Feld33, #Feld34, #Feld35, #Feld36, #Feld37, #Feld38, #Feld39{
+		width: 100%;
+		height: 10.87%;
+		float: left;
+		border-bottom: 1px solid #333333;
+		} 	
+		#SpieleFeldBild{
+		position: absolute;
+		}
+		#Feld0, #Feld10{
+		float:left;
+		height: 100%;
+		width: 14%;
+		}
+		#Feld0{
+		border-right: 1px solid #333333;
+		}
+		#Feld20{
+		border-right: 1px solid #333333;
+		height: 16.8%;
+		width: 100%;
+		}
+		#Feld30{
+		height: 100%;
+		width: 16%;
+		float:left;
+		}
+		#Feld39{
+		border: 0;
+		}
+		#Feld1_Hotel, #Feld3_Hotel, #Feld4_Hotel, #Feld6_Hotel, #Feld7_Hotel, #Feld9_Hotel{
+		border-top: 1px solid #333333;
+		float: left;
+		height: 20%;
+		width: 100%;
+		margin-top: 150%;
+		}
+		#Feld11_Hotel, #Feld12_Hotel, #Feld14_Hotel, #Feld16_Hotel, #Feld18_Hotel, #Feld19_Hotel{
+		border-left: 1px solid #333333;
+		float: right;
+		height: 100%;
+		width: 20%;
+		}
+		#Feld21_Hotel, #Feld22_Hotel, #Feld24_Hotel, #Feld27_Hotel, #Feld29_Hotel{
+		border-bottom: 1px solid #333333;
+		float: left;
+		height: 20%;
+		width: 100%;
+		}
+		#Feld31_Hotel, #Feld32_Hotel, #Feld34_Hotel, #Feld37_Hotel, #Feld39_Hotel{
+		border-right: 1px solid #333333;
+		float: left;
+		height: 100%;
+		width: 20%;
+		}
+		#TopSpielFeldReihe{
+		float: left;
+		width: 100%;
+		height: 14%;
+		border-bottom: 1px solid #333333;
+		}
+		#LeftSpielFeldReihe{
+		float: left;
+		width: 14%;
+		height: 86%;
+		border-right: 1px solid #333333;
+		}
+		#Zwischenablage{
+		float:left;
+		width: 71.5%;
+	    height: 71.4%;
+		}
+		#BottomSpielFeldReihe{
+		float: left;
+		height: 14%;
+		width: 85.8%;
+		border-top: 1px solid #333333;
+		}
+		#RightSpielFeldReihe{
+		float:left;
+		width: 13.9%;
+		height: 71.3%;
+		border-left: 1px solid #333333;
+		}
+		p{
+		position: absolute;
+		}
+		.UserListOnline {
+		 float: left;
+		 width: 280px;
+		 height: 800px;
+		}
+		</style>
+		</head>
+		<body>
+		<!-- <img id="SpieleFeldBild" src="spielfeldbeta.jpg" style="height: 500px; width: 500px;"> -->
+		<div id="Container">
+		<div id="SpielFeld" style="overflow: hidden; width: 500px; height: 500px;">
+		
+		<div id="TopSpielFeldReihe">
+		<div id="Feld0"></div><div id="Feld1"><div id="Feld1_Hotel"></div></div><div id="Feld2"></div><div id="Feld3"><div id="Feld3_Hotel"></div></div><div id="Feld4"><div id="Feld4_Hotel"></div></div>
+		<div id="Feld5"></div><div id="Feld6"><div id="Feld6_Hotel"></div></div><div id="Feld7"><div id="Feld7_Hotel"></div></div><div id="Feld8"></div><div id="Feld9"><div id="Feld9_Hotel"></div></div><div id="Feld10"></div>
+		</div>
+		<!-- Öffne neuen Container -->
+		<div id="LeftSpielFeldReihe">
+			<div id="Feld11"><div id="Feld11_Hotel"></div></div><div id="Feld12"><div id="Feld12_Hotel"></div></div><div id="Feld13"></div><div id="Feld14"><div id="Feld14_Hotel"></div></div>
+		<div id="Feld15"></div><div id="Feld16"><div id="Feld16_Hotel"></div></div><div id="Feld17"><div id="Feld17_Hotel"></div></div><div id="Feld18"><div id="Feld18_Hotel"></div></div><div id="Feld19"><div id="Feld19_Hotel"></div></div><div id="Feld20"></div>
+		</div>
+		
+		<div id="Zwischenablage"></div>
+		<div id="RightSpielFeldReihe">
+			<div id="Feld31"><div id="Feld31_Hotel"></div></div><div id="Feld32"><div id="Feld32_Hotel"></div></div><div id="Feld33"></div><div id="Feld34"><div id="Feld34_Hotel"></div></div>
+		<div id="Feld35"></div><div id="Feld36"></div><div id="Feld37"><div id="Feld37_Hotel"></div></div><div id="Feld38"></div><div id="Feld39"><div id="Feld39_Hotel"></div></div>
+		</div>
+		
+		<div id="BottomSpielFeldReihe">
+			<div id="Feld21"><div id="Feld21_Hotel"></div></div><div id="Feld22"><div id="Feld22_Hotel"></div></div><div id="Feld23"></div><div id="Feld24"><div id="Feld24_Hotel"></div></div>
+		<div id="Feld25"></div><div id="Feld26"></div><div id="Feld27"><div id="Feld27_Hotel"></div></div><div id="Feld28"></div><div id="Feld29"><div id="Feld29_Hotel"></div></div><div id="Feld30"></div>
+		</div>
+		
+		</div>
+		
+		
+		<div class="UserListOnline">
+            <h3>Online Users</h3>
+            <div id="usersOnline"></div>
+			
+        </div>
+		
+		<div id="OptionBar">
+		<button id="StartEvent">Start</button>
+		</div>
+		
+		<div id="menu">
+			<button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
+		</div>
+		
+		<h2>Chat</h2>
+        <div id="chat" style="float: left; height:300px; width: 500px; border: 1px solid silver; overflow: scroll;"></div>
+        <form id="send-form">
+        <input id="message">
+        <input type="submit">
+        </form>
+		</div>
+		</body>
+</html>
+<script>
+         jQuery(function($){
+		 var $usersOnline = $('#usersOnline');
+		 var $form = $('#send-form');
+         var $message = $('#message');
+         var $chatbox = $('#chat');
+		 var socket = io.connect();
+		 $('#roll').click(function(){
+			socket.emit('roll');
+		 });
+		 $('#StartEvent').click(function(){
+			socket.emit('StartEvent');
+		 });
+		$form.submit(function(e){
+                e.preventDefault();
+                socket.emit('Data', $message.val(), function(data){
+                 $chatbox.append('<span class="error"><b>'+ data + '<span></br>');
+                //socket.emit('Ressource', $Ressource.html());
+                // Var A wird um + erhöht, übergabe P2 ist falsch...
+                });
+                //$("#chat").scrollTop($("#chat")[0].scrollHeight);
+                $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                $message.val('');
+                //Server sendet hier wirde empfangen (Socket.on)
+                //Chat Socket
+		});
+				/*socket.on('MemberList', function(data){
+				console.log(data.length);
+				for(x=0; x<data.length; x++) {
+                     $("#UserList").append(data[x] + '</br>');
+					}                     
+                });*/
+				socket.on('StartTheGame', function(PlayerNames){
+					var html = '';
+                   for(i=0; i < PlayerNames.length; i++){
+                       html += PlayerNames[i] + '</br>';
+                   }
+					$('#Feld30').html(html);
+				});
+				socket.on('Movment', function(PlayerNames, FeldName){
+					var FeldWert = $(FeldName).html();
+					
+					$(FeldName).html('<p>'+PlayerNames+'</p>'+FeldWert);
+				});
+				socket.on('PositionDeleter', function(Spieler , FeldName){
+					console.log(FeldName);
+					var FeldWert = $(FeldName).html();
+					console.log(FeldWert);
+					Deleter = FeldWert.replace(Spieler, "");
+					console.log(Deleter);
+					$(FeldName).html(Deleter);
+				});
+				socket.on('usernamesOnline', function(data){
+                   var html = '';
+                   for(i=0; i < data.length; i++){
+                       html += data[i] + '</br>';
+                   }
+                   $usersOnline.html(html);
+                });
+				
+				socket.on('ServerMessege', function(data){
+                     $chatbox.append(data+'<span></br>');
+                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+                socket.on('message', function(data){
+                     $chatbox.append('<span class="msg"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
+                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+                socket.on('whisper', function(data){
+                    $chatbox.append('<span class="whisper"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
+                    $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+				
+			$('#SpielFeld').on('mousewheel MozMousePixelScroll', function (event) {
+			var delta = event.originalEvent.wheelDelta * -1
+                  || event.originalEvent.detail;
+			if(delta < 0){
+			//Je nach dem wie man den Wert addiert müssten die Div Felder auf die entsprechene grösse angepast werden.
+				var SpielFeldHoehe = $( "#SpielFeld" ).css("height");
+				SpielFeldHoehe = SpielFeldHoehe.replace("px", "");
+				var SpielFeldHoehe = parseInt( SpielFeldHoehe );
+				console.log(SpielFeldHoehe);
+				if(SpielFeldHoehe < 2000){
+					SpielFeldHoehe += 4; 
+					$( "#SpielFeld" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpielFeld" ).width( SpielFeldHoehe ).css("width");
+					$( "#SpieleFeldBild" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpieleFeldBild" ).width( SpielFeldHoehe ).css("width");
+					console.log('scroll up');
+				}
+			} else {
+				var SpielFeldHoehe = $( "#SpielFeld" ).css("height");
+				SpielFeldHoehe = SpielFeldHoehe.replace("px", "");
+				var SpielFeldHoehe = parseInt( SpielFeldHoehe );
+				console.log(SpielFeldHoehe);
+				if(SpielFeldHoehe > 500){
+					SpielFeldHoehe -= 4;
+					$( "#SpielFeld" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpielFeld" ).width( SpielFeldHoehe ).css("width");
+					$( "#SpieleFeldBild" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpieleFeldBild" ).width( SpielFeldHoehe ).css("width");
+					console.log('scroll Down');
+				}
+			}
+});
+		 });	
+</script>
