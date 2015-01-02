@@ -413,7 +413,7 @@
 					console.log(Deleter);
 					$(FeldName).html(Deleter);
 				});
-				socket.on('usernamesOnline', function(data){
+				socket.on('usernamesOnline', function(data, SpielerReihenFolge){
                    var html = '';
                    for(i=0; i < data.length; i++){
                        html += data[i] + '</br>';
@@ -437,19 +437,21 @@
                     $chatbox.append('<span class="whisper"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
                 });
-				socket.on('PlayerCashClient', function(PlayerCash, PlayerRang){
-					//Reihenfolge stimmt nicht dann sollte das eig gehen
+				socket.on('PlayerCashClient', function(PlayerCash, PlayerRang, Reihenfolge, PlayerName){
+					//Reihenfolge - gibt das array mit der playerreihenfolge! 
+					//Reihenfolge[0] = spieler 1
+					//Prüfe ob die Reihenfolge korrekt ist! 
 					console.log(PlayerRang);
 					if(PlayerRang == 1){
-						$('#player1money').html(PlayerCash);
+						$('#player1money').html("$ "+PlayerCash);
 					}else if(PlayerRang == 2){
-						$('#player2money').html(PlayerCash);
+						$('#player2money').html("$ "+PlayerCash);
 					}else if(PlayerRang == 3){
-						$('#player3money').html(PlayerCash);
+						$('#player3money').html("$ "+PlayerCash);
 					}else if(PlayerRang == 4){
-						$('#player4money').html(PlayerCash);
+						$('#player4money').html("$ "+PlayerCash);
 					}else if(PlayerRang == 5){
-						$('#player5money').html(PlayerCash);
+						$('#player5money').html("$ "+PlayerCash);
 					}
 					//socket.emit('PlayerCashClient', socket.PlayerCash, MPQ, PlayerRang);
 					
