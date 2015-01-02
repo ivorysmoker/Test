@@ -368,6 +368,9 @@
 		 $('#StartEvent').click(function(){
 			socket.emit('StartEvent');
 		 });
+		 $('#PlayerBuy').click(function(){
+			socket.emit('PlayerBuySend');
+		});
 		$form.submit(function(e){
                 e.preventDefault();
                 socket.emit('Data', $message.val(), function(data){
