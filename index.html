@@ -426,7 +426,7 @@
                 });
 				
 				socket.on('ServerMessege', function(data){
-                     $chatbox.append(data+'<span></br>');
+                     $chatbox.append('<span style="color: red;">'+data+'</span></br>');
                      $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
                 });
                 socket.on('message', function(data){
