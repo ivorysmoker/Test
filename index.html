@@ -335,8 +335,8 @@
             <div id="usersOnline"></div>
 			
         </div>
-		
-	
+		<button id="PlayerBuy">Kaufen</button>
+		<button id="PlayerBuyExit">Nicht Kaufen</button>
 		
 		<div id="menu">
 <button id="StartEvent">Start</button><button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
@@ -365,11 +365,11 @@
 		 $('#roll').click(function(){
 			socket.emit('roll');
 		 });
-		 $('#StartEvent').click(function(){
+		$('#StartEvent').click(function(){
 			socket.emit('StartEvent');
-		 });
-		 $('#PlayerBuy').click(function(){
-			socket.emit('PlayerBuySend');
+		});
+		$('#PlayerBuy').click(function(){
+				socket.emit('PlayerBuySend');
 		});
 		$('#PlayerBuyExit').click(function(){
 				socket.emit('PlayerBuyExit');
@@ -436,6 +436,24 @@
                 socket.on('whisper', function(data){
                     $chatbox.append('<span class="whisper"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+				socket.on('PlayerCashClient', function(PlayerCash, PlayerRang){
+					//Reihenfolge stimmt nicht dann sollte das eig gehen
+					console.log(PlayerRang);
+					if(PlayerRang == 1){
+						$('#player1money').html(PlayerCash);
+					}else if(PlayerRang == 2){
+						$('#player2money').html(PlayerCash);
+					}else if(PlayerRang == 3){
+						$('#player3money').html(PlayerCash);
+					}else if(PlayerRang == 4){
+						$('#player4money').html(PlayerCash);
+					}else if(PlayerRang == 5){
+						$('#player5money').html(PlayerCash);
+					}
+					//socket.emit('PlayerCashClient', socket.PlayerCash, MPQ, PlayerRang);
+					
+                   /*$('player1money').html(PlayerCash);*/
                 });
 				
 			$('#SpielFeld').on('mousewheel MozMousePixelScroll', function (event) {
