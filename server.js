@@ -14,9 +14,11 @@ var express = require('express'),
 	//gefägnis 0000
 	//freiparken 000000
 	//Bitte KostenMap anpassen danke!
+	//erreignise erstellen ErreignisKarten["Dies schickt dich auf ein neues Feld"] etc. etc.
+	//erreignise erstellen KistenKarten["Dies added 100 dollar"] etc. etc.
 	ErreignisKarten = [];
 	KistenKarten = [];
-	KostenMap = [00000, 60, 000, 60, 200, 200, 100, 0, 100, 120, 0, 140, 150, 140, 160, 200, 180, 0, 180, 200, 0, 220, 0, 220, 240, 200, 260, 260, 150, 280, 0, 300, 300, 0, 320, 200, 0, 350, 200, 400];
+	KostenMap = [00000, 60, 000, 60, 200, 200, 100, 0000, 100, 120, 000, 140, 150, 140, 160, 200, 180, 0000, 180, 200, 00000, 220, 0000, 220, 240, 200, 260, 260, 150, 280, 0000, 300, 300, 0, 320, 200, 0, 350, 200, 400];
 	NamenMap = ["Los", "Kiosk", "Gemeinschaftsfeld", "Reinigung", "Einkommensteuer", "Süd-Bahnhof", "Tabakladen", "Ereignisfeld", "Getränkemarkt", "Restaurant", "Knast", "Müll Deponie" , "Elektrizitätswerk" , "Tankstelle" , "Waschanlage", "West-Bahnhof", "Lidli", "Gemeinschaftsfeld", "Aldli", "Metrio", "Frei parken", "Theater", "Ereignisfeld", "Oper", "Museum", "Nord-Bahnhof", "Tennisplatz", "Spielehalle", "Wasserwerk" , "Fussballfeld", "Gehe ins Gefängnis", "Rathhausplatz", "Steueramt", "Gemeinschaftsfeld", "Zollamt" ,"Hauptbahnhof", "Ereignisfeld", "Gerichtsgebäude", "Monopoly Steuer", "Juwelier"];
 	GekaufeArtikelNummer = [];
 	GekaufeArtikelSpieler = [];
@@ -154,6 +156,8 @@ updateNicknamesOnline();
 			    console.log("ab ins jail mit dir!");	
 				socket.PlayerActive = 0;
 				socket.paschcounter = 0;
+				//Schmeisse den SPiler in den Jail
+				//socket.PlayerPosition gibt die aktuelle Position des Spielers
 			}
 		}else{
 			socket.paschcounter = 0;
