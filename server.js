@@ -8,13 +8,22 @@ var express = require('express'),
 	BenutzerIpName = [];
 	BenutzerReihenFolge = [];
 	KartenMap = ["#Feld30", "#Feld29", "#Feld28", "#Feld27", "#Feld26", "#Feld25", "#Feld24", "#Feld23", "#Feld22", "#Feld21", "#Feld20", "#Feld19", "#Feld18", "#Feld17", "#Feld16", "#Feld15", "#Feld14", "#Feld13", "#Feld12", "#Feld11", "#Feld0", "#Feld1", "#Feld2", "#Feld3", "#Feld4", "#Feld5", "#Feld6", "#Feld7", "#Feld8", "#Feld9", "#Feld10", "#Feld31", "#Feld32", "#Feld33", "#Feld34", "#Feld35", "#Feld36", "#Feld37", "#Feld38", "#Feld39" ];
-	KostenMap = [0, 60, 0, 60, 200, 200, 100, 0, 100, 120, 0, 140, 150, 140, 160, 200, 180, 0, 180, 200, 0, 220, 0, 220, 240, 200, 260, 260, 150, 280, 0, 300, 300, 0, 320, 200, 0, 350, 200, 400];
+	//kisten 000
+	//Zahlungsfeld 00
+	//ereignise 0
+	//gefägnis 0000
+	//freiparken 000000
+	//Bitte KostenMap anpassen danke!
+	ErreignisKarten = [];
+	KistenKarten = [];
+	KostenMap = [00000, 60, 000, 60, 200, 200, 100, 0, 100, 120, 0, 140, 150, 140, 160, 200, 180, 0, 180, 200, 0, 220, 0, 220, 240, 200, 260, 260, 150, 280, 0, 300, 300, 0, 320, 200, 0, 350, 200, 400];
 	NamenMap = ["Los", "Kiosk", "Gemeinschaftsfeld", "Reinigung", "Einkommensteuer", "Süd-Bahnhof", "Tabakladen", "Ereignisfeld", "Getränkemarkt", "Restaurant", "Knast", "Müll Deponie" , "Elektrizitätswerk" , "Tankstelle" , "Waschanlage", "West-Bahnhof", "Lidli", "Gemeinschaftsfeld", "Aldli", "Metrio", "Frei parken", "Theater", "Ereignisfeld", "Oper", "Museum", "Nord-Bahnhof", "Tennisplatz", "Spielehalle", "Wasserwerk" , "Fussballfeld", "Gehe ins Gefängnis", "Rathhausplatz", "Steueramt", "Gemeinschaftsfeld", "Zollamt" ,"Hauptbahnhof", "Ereignisfeld", "Gerichtsgebäude", "Monopoly Steuer", "Juwelier"];
 	GekaufeArtikelNummer = [];
 	GekaufeArtikelSpieler = [];
 	BenutzerReihenFolgeMax = [];
 	GekaufeArtikel = {};
 	BuyCounter = 0;
+	FreiParken = 0;
 server.listen(1339);
 console.log("Server Online");
 //var mysql = require('mysql');
@@ -181,37 +190,11 @@ updateNicknamesOnline();
 			Spieler7 = SpielerName[6];
 			Spieler8 = SpielerName[7];
 			console.log(Spieler1 + Spieler2 + Spieler3 + Spieler4 + Spieler5 + Spieler6 + Spieler7 + Spieler8);
-			if(beginner == 0){
-				io.sockets.emit('ServerMessege', Spieler1+" darf als erstes würfeln.");
-				OnlineUsers[Spieler1].PlayerActive = 1;
-				console.log(OnlineUsers[Spieler1].PlayerActive);
-			}else if(beginner == 1){
-				io.sockets.emit('ServerMessege', Spieler2+" darf als erstes würfeln.");
-				OnlineUsers[Spieler2].PlayerActive = 1;
-			}else if(beginner == 2){
-				io.sockets.emit('ServerMessege', Spieler3+" darf als erstes würfeln.");
-				OnlineUsers[Spieler3].PlayerActive = 1;
-			}else if(beginner == 3){
-				io.sockets.emit('ServerMessege', Spieler4+" darf als erstes würfeln.");
-				OnlineUsers[Spieler4].PlayerActive = 1;
-			}else if(beginner == 4){
-				io.sockets.emit('ServerMessege', Spieler5+" darf als erstes würfeln.");
-				OnlineUsers[Spieler5].PlayerActive = 1;
-			}else if(beginner == 5){
-				io.sockets.emit('ServerMessege', Spieler6+" darf als erstes würfeln.");
-				OnlineUsers[Spieler5].PlayerActive = 1;
-			}else if(beginner == 6){
-				io.sockets.emit('ServerMessege', Spieler7+" darf als erstes würfeln.");
-				OnlineUsers[Spieler5].PlayerActive = 1;
-			}else if(beginner == 7){
-				io.sockets.emit('ServerMessege', Spieler8+" darf als erstes würfeln.");
-				OnlineUsers[Spieler5].PlayerActive = 1;
-			}
+			OnlineUsers[Spieler1].PlayerActive = 1;
+			io.sockets.emit('ServerMessege', Spieler1+" darf beginnen!");
 			
 			
-			//Wer hat first blood`?
-			//????????????????????????????????????????????????????????? :/
-			//Setze Spieler auf Start
+			//Setze SpielStart
 			SpielStart = 1;
 			io.sockets.emit('StartTheGame', SpielerName);	
 			}
@@ -226,7 +209,7 @@ updateNicknamesOnline();
 	});
 	//GrundIdee für System @ paper
 	socket.on('PlayerBuySend', function(){
-	if(socket.PlayerActive !== 1){
+	if(socket.PlayerActive !== 1 && socket.KaufButton == 0){
 		socket.emit('ServerMessege', 'Du kannst im Moment nichts kaufen!');
 		console.log(socket.KaufButton);
 	}else{
@@ -285,7 +268,6 @@ updateNicknamesOnline();
 			//Lösche den Aktiven Spieler
 			socket.PlayerActive = 0;
 			
-			
 			//Meldung ausgeben
 			io.sockets.emit('ServerMessege' , 'Der Spieler '+ AktiverSpieler +' ist an der Reihe.');
 			console.log(SpielerAnzahl);
@@ -295,13 +277,21 @@ updateNicknamesOnline();
 	});
 	
 	socket.on('PlayerBuyExit', function(){
-	if(socket.PlayerActive !== 1){
+	if(socket.PlayerActive !== 1 && socket.KaufButton == 0){
 		socket.emit('ServerMessege', 'Du kannst deinen Zug jetzt nicht abbrechen!');
 		}else{
-		    //Player Kauft keine Karte weiter zum nächsten Spieler
-			socket.PlayerActive = 0;
+		    NextPlayer(socket);
+		}
+	});
+});
+	//EPIC Player Switch Function!
+	function NextPlayer(socket){
+	socket.PlayerActive = 0;
 			socket.KaufButton = 0;
-			console.log('Next Player Massage?');
+			if(BenutzerReihenFolgeMax.length == SpielerAnzahl){
+				delete BenutzerReihenFolgeMax; // array ausgabe ist falsch
+				BenutzerReihenFolgeMax = [];
+			}
 			io.sockets.emit('ServerMessege', 'Spieler '+socket.nickname+' beendet seinen Zug.');
 						//Wirf den ersten Spieler in ein neuen Array
 			BenutzerReihenFolge.push(socket.nickname);
@@ -309,14 +299,23 @@ updateNicknamesOnline();
 			console.log(BenutzerReihenFolge.indexOf(Spieler1));
 				if(BenutzerReihenFolge.indexOf(Spieler1) == -1){
 					OnlineUsers[Spieler1].PlayerActive = 1;
-					var AktiverSpieler = Spieler1; // for wath ...
+					var AktiverSpieler = Spieler1;
+					if(BenutzerReihenFolgeMax.length < SpielerAnzahl){
+						BenutzerReihenFolgeMax.push(Spieler1);
+					}					
 				}else if(BenutzerReihenFolge.indexOf(Spieler2) == -1){
 					OnlineUsers[Spieler2].PlayerActive = 1;
 					var AktiverSpieler = Spieler2;
+					if(BenutzerReihenFolgeMax.length < SpielerAnzahl){
+						BenutzerReihenFolgeMax.push(Spieler2);
+					}
 				}else if(BenutzerReihenFolge.indexOf(Spieler3) == -1){
 					OnlineUsers[Spieler3].PlayerActive = 1;
 					var AktiverSpieler = Spieler3;
-				}
+					if(BenutzerReihenFolgeMax.length < SpielerAnzahl){
+						BenutzerReihenFolgeMax.push(Spieler3);
+					}
+				}//erweitern falls mehr spieler dazu kommen, maybe noch for schleife
 			//Wenn Max Spiler Anzahl erreicht ist setze array zurück
 			var Umrechnung = BenutzerReihenFolge.length + 1;
 				console.log(Umrechnung + " Array Anzahl 1 or 2");
@@ -329,20 +328,68 @@ updateNicknamesOnline();
 			//Meldung ausgeben
 			io.sockets.emit('ServerMessege' , 'Der Spieler '+ AktiverSpieler +' ist an der Reihe.');
 			console.log(SpielerAnzahl);
-		}
-	});
-});
-
+	}
 
 	function FeldOptionen(SpielerName, FeldPosNumber, socket){
 		socket.PlayerPos = FeldPosNumber;
 		if(GekaufeArtikelNummer.indexOf(FeldPosNumber) == -1){
 			//SpielerNachricht
+			if(KostenMap[FeldPosNumber] !== 0 || KostenMap[FeldPosNumber] !== 00 || KostenMap[FeldPosNumber] !== 000 || KostenMap[FeldPosNumber] !== 0000 || KostenMap[FeldPosNumber] !== 00000 || KostenMap[FeldPosNumber] !== 000000){
 			socket.emit('ServerMessege', 'Willst du '+NamenMap[FeldPosNumber]+' für '+KostenMap[FeldPosNumber]+' Dollar kaufen?');
 			socket.KaufButton = 1;
+			}else{
+			console.log('Erreignis Feld, Zahlungsfeld, oder Kisten Feld gefägnis, freiparken');
+				if(KostenMap[FeldPosNumber] !== 0){
+					io.sockets.emit('ServerMessege', 'Ereignisfeld ausgelöst: ');
+				}else if(KostenMap[FeldPosNumber] !== 00){
+					io.sockets.emit('ServerMessege', 'Zahlunsfeld ausgelöst: ');
+					socket.PlayerCash = socket.PlayerCash - 100; //vorest fixxierter Preis!
+					io.sockets.emit('ServerMessege', 'Der Spieler zahlt: $100 an die Bank.');
+					var AnzeigeBenutzer = BenutzerReihenFolgeMax.length;
+					io.sockets.emit('PlayerCashClient', socket.PlayerCash, AnzeigeBenutzer);
+					//kommt dieser betrag zu Freiparken?
+				}else if(KostenMap[FeldPosNumber] !== 000){
+					io.sockets.emit('ServerMessege', 'Kistenfeld ausgelöst: ');
+				}else if(KostenMap[FeldPosNumber] !== 0000){
+					io.sockets.emit('ServerMessege', 'gefägnis ausgelöst: ');
+					//Schicke PlayerPos zu gefägnis.
+					//Rufe die Next Player function auf.
+					//Am anfang eines zuges muss geprüft werden ob sich dieser spieler in jail befindet. bsp if(socket.jail = 1 ... (socket.jail muss exisiteren!
+					//hier kommt noch einiges^^
+				}else if(KostenMap[FeldPosNumber] !== 000000){
+					io.sockets.emit('ServerMessege', 'Freiparken ausgelöst: ');
+					if(FreiParken > 0){
+						socket.PlayerCash = socket.PlayerCash + FreiParken;
+						io.sockets.emit('ServerMessege', 'Der Spieler '+socket.nickname+' hat $'+FreiParken+' im Freipark gefunden!');
+						var AnzeigeBenutzer = BenutzerReihenFolgeMax.length;
+						io.sockets.emit('PlayerCashClient', socket.PlayerCash, AnzeigeBenutzer);
+					}
+				}else if(KostenMap[FeldPosNumber] !== 00000){
+					io.sockets.emit('ServerMessege', 'start ausgelöst: ');
+				}
+				//EVENTS CLOSED OPEN NEXT PLAYER FUNCTION
+				NextPlayer(socket);
+			}
 		}else{
-			io.sockets.emit('ServerMessege', 'Dieses Feld ist bereits an Spieler '+socket.nickname+' vergeben.');  //?? 
-			socket.KaufButton = 0;
+			if(KostenMap[FeldPosNumber] !== 0){
+				//grösse des Arrays
+				var Menge = GekaufeArtikelNummer.length;
+				//Suche nach Player
+				for(x=0; x<Menge; x++){
+					if(GekaufeArtikelNummer[x] == FeldPosNumber){
+						var ArtikelBesitzer = GekaufeArtikelSpieler[x];
+					}
+				}
+			console.log("Besitzer "+ArtikelBesitzer);
+			if(ArtikelBesitzer !== socket.nickname){
+			console.log("Externen Player Cash "+OnlineUsers[ArtikelBesitzer].PlayerCash);
+			OnlineUsers[ArtikelBesitzer].PlayerCash = OnlineUsers[ArtikelBesitzer].PlayerCash - KostenMap[FeldPosNumber];
+			io.sockets.emit('ServerMessege', 'Dieses Feld ist bereits an Spieler '+ArtikelBesitzer+' vergeben! Der Spieler '+ArtikelBesitzer+' erhält von '+socket.nickname+' $ '+KostenMap[FeldPosNumber]+' Dollar');
+			NextPlayer(socket);
+			}else{
+				io.socket.emit('ServerMessege', 'Das '+NamenMap[FeldPosNumber]+' gehört dir schon!');
+			}
+			}
 		}
 	}
 
