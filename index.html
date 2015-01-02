@@ -371,6 +371,9 @@
 		 $('#PlayerBuy').click(function(){
 			socket.emit('PlayerBuySend');
 		});
+		$('#PlayerBuyExit').click(function(){
+				socket.emit('PlayerBuyExit');
+		});
 		$form.submit(function(e){
                 e.preventDefault();
                 socket.emit('Data', $message.val(), function(data){
