@@ -337,6 +337,8 @@
         </div>
 		<button id="PlayerBuy">Kaufen</button>
 		<button id="PlayerBuyExit">Nicht Kaufen</button>
+		<button id="Kaution">Kaution</button>
+		<button id="reroll">Nochmal würfeln</button>
 		
 		<div id="menu">
 <button id="StartEvent">Start</button><button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
@@ -373,6 +375,12 @@
 		});
 		$('#PlayerBuyExit').click(function(){
 				socket.emit('PlayerBuyExit');
+		});
+		$('#Kaution').click(function(){
+			socket.emit('Kaution');
+		});
+		$('#reroll').click(function(){
+			socket.emit('reroll');
 		});
 		$form.submit(function(e){
                 e.preventDefault();
