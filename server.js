@@ -247,6 +247,18 @@ updateNicknamesOnline();
 	//var socketId = socket.id
 	//console.log("Benuzer IP: "+BenutzerIp[0]+BenutzerIpName[0]+BenutzerIp[1]+BenutzerIpName[1]);
 	});
+	//GrundIdee für System @ paper
+	socket.on('PlayerBuySend', function(){
+	//Player kauft Karte, adde Karte zu Array, ziehe dem Spieler Money ab, weiter zum nächsten SPiler
+	console.log('Das geht!');
+				GekaufeArtikel[SpielerName] = FeldPosNumber;
+			  console.log(GekaufeArtikel);
+	});
+	
+	socket.on('PlayerBuyExit', function(){
+	//Player Kauft keine Karte weiter zum nächsten Spieler
+	console.log('Das geht! Exit');
+	});
 });
 
 
@@ -255,25 +267,10 @@ updateNicknamesOnline();
 	function updateNicknamesOnline(){
         io.sockets.emit('usernamesOnline', Object.keys(OnlineUsers)); 
     }
-	function FeldOptionen(SpielerName, FeldPosNumber){
-	//Prüfe ob der Artikel noch vorhanden ist.
-	/*	TestArr.push('Testing');
-	TestArr[0][0] = "2";
-	test = KartenMap.length;
-		console.log(test);
-	TestArr.push('Testing');
-	TestArr[0][1] = "3";*/
+	function FeldOptionen(SpielerName, FeldPosNumber, socket){
 		if(Object.keys(GekaufeArtikel).indexOf(FeldPosNumber) == -1){
-			//socket.emit('ServerMessege', 'Willst du den ')
-			//Falls der Artikel gekauft wird
-			/*GekaufeArtikel.push(FeldPosNumber);*/
-			GekaufeArtikel[SpielerName] = FeldPosNumber;
-						console.log(GekaufeArtikel);
-			//Adde dem Spieler das Feld
+			//SpielerNachricht
+			socket.emit('ServerMessege', 'Willst du '+NamenMap[FeldPosNumber]+' für '+KostenMap[FeldPosNumber]+' Dollar kaufen?');
+			socket.KaufButton = 1;
 		}
-		var FeldId = KartenMap[FeldPosNumber];
-		var FeldKosten = KostenMap[FeldPosNumber];
-		//Ist dieses Feld schon an einen Spieler vergeben?
-		
-		//Cash abfrage und kauf option
 	}
