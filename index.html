@@ -1,0 +1,502 @@
+<html>
+    <head>
+        <title>Node.js Testing</title>
+        <meta charset="utf-8">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<style>
+		#container{
+		height: 100%;
+		width: 100%;
+		}
+		#SpielFeld{
+		width: 1000px;
+		height: 1000px;
+		float:left;
+		border: 1px solid #333333;
+		background-color: #ade8ca;
+		}
+		#Feld1, #Feld2, #Feld3, #Feld4, #Feld5, #Feld6, #Feld7, #Feld8, #Feld9{
+		width: 7.77%;
+		height: 100%;
+		border-right: 1px solid #333333;
+		float:left;
+		}
+		#Feld11, #Feld12, #Feld13, #Feld14, #Feld15, #Feld16, #Feld17, #Feld18, #Feld19{
+		width: 100%;
+		height: 9.0132%;
+		border-bottom: 1px solid #333333;
+		}
+		#Feld21, #Feld22, #Feld23, #Feld24, #Feld25, #Feld26, #Feld27, #Feld28, #Feld29{
+		width: 9.07%;
+		height: 100%;
+		border-right: 1px solid #333333;
+		float: left;
+		} 	
+		#Feld31, #Feld32, #Feld33, #Feld34, #Feld35, #Feld36, #Feld37, #Feld38, #Feld39{
+		width: 100%;
+		height: 10.87%;
+		float: left;
+		border-bottom: 1px solid #333333;
+		} 	
+		#SpieleFeldBild{
+		position: absolute;
+		}
+		#Feld0, #Feld10{
+		float:left;
+		height: 100%;
+		width: 14%;
+		}
+		#Feld0{
+		border-right: 1px solid #333333;
+		}
+		#Feld20{
+		border-right: 1px solid #333333;
+		height: 16.8%;
+		width: 100%;
+		}
+		#Feld30{
+		height: 100%;
+		width: 16%;
+		float:left;
+		}
+		#Feld39{
+		border: 0;
+		}
+		#Feld1_Hotel, #Feld3_Hotel, #Feld4_Hotel, #Feld6_Hotel, #Feld7_Hotel, #Feld9_Hotel{
+		border-top: 1px solid #333333;
+		float: left;
+		height: 20%;
+		width: 100%;
+		margin-top: 142%;
+		}
+                #Feld1_Hotel, #Feld3_Hotel, #Feld4_Hotel {
+                    background-color: red;
+                }
+                #Feld6_Hotel, #Feld7_Hotel, #Feld9_Hotel {
+                    background-color: yellow;
+                }
+		#Feld11_Hotel, #Feld12_Hotel, #Feld14_Hotel, #Feld16_Hotel, #Feld18_Hotel, #Feld19_Hotel{
+		border-left: 1px solid #333333;
+		float: right;
+		height: 100%;
+		width: 20%;
+		}
+                #Feld16_Hotel, #Feld18_Hotel, #Feld19_Hotel {
+                    background-color: #ff00cc
+                }
+                #Feld11_Hotel, #Feld12_Hotel, #Feld14_Hotel {
+                    background-color: orange;
+                }
+		#Feld21_Hotel, #Feld22_Hotel, #Feld24_Hotel, #Feld27_Hotel, #Feld29_Hotel{
+		border-bottom: 1px solid #333333;
+		float: left;
+		height: 20%;
+		width: 100%;
+		}
+                #Feld27_Hotel, #Feld29_Hotel {
+                  background-color: purple;  
+                } 
+                #Feld21_Hotel, #Feld22_Hotel, #Feld24_Hotel {
+                    background-color: lightskyblue;
+                }
+		#Feld31_Hotel, #Feld32_Hotel, #Feld34_Hotel, #Feld37_Hotel, #Feld39_Hotel{
+		border-right: 1px solid #333333;
+		float: left;
+		height: 100%;
+		width: 20%;
+		}
+                #Feld31_Hotel, #Feld32_Hotel, #Feld34_Hotel {
+                    background-color: green;
+                }
+                #Feld37_Hotel, #Feld39_Hotel {
+                    background-color: blue;
+                }
+		#TopSpielFeldReihe{
+		float: left;
+		width: 100%;
+		height: 14%;
+		border-bottom: 1px solid #333333;
+		}
+		#LeftSpielFeldReihe{
+		float: left;
+		width: 14%;
+		height: 86%;
+		border-right: 1px solid #333333;
+		}
+		#Zwischenablage{
+		float:left;
+		width: 71.5%;
+	    height: 71.4%;
+		}
+		#BottomSpielFeldReihe{
+		float: left;
+		height: 14%;
+		width: 85.8%;
+		border-top: 1px solid #333333;
+		}
+		#RightSpielFeldReihe{
+		float:left;
+		width: 13.9%;
+		height: 71.3%;
+		border-left: 1px solid #333333;
+		}
+		p{
+		position: absolute;
+		}
+		.UserListOnline {
+		 float: left;
+		 width: 280px;
+		 height: 500px;
+                 border: 1px solid;
+		}
+                #menu {
+                    float: left;
+                }
+                .chatdiv {
+                    height: 400px;
+                    width: 500px;
+                    float: left;
+                }
+                #player1feld, #player2feld, #player3feld, #player4feld {
+                    height: 60px;
+                    width: 100%;
+                    border-bottom: 1px solid;                  
+                }
+                #player1image, #player2image, #player3image, #player4image{
+                    height: 100%;
+                    width: 25%;
+                    border-right: 1px solid;
+                    float: left;
+                    text-align: center;
+                }
+                #player1name, #player2name, #player3name, #player4name {
+                  border-bottom: 1px solid;
+                 float: left;
+                   height: 30%;
+                  width: 52.648%;                  
+                 }
+                 #player1money, #player2money, #player3money, #player4money {
+                     border-bottom: 1px solid;
+                     border-left: 1px solid;
+                      float: right;
+                      height: 30%;
+                      text-align: center;
+                    width: 21.5%;
+                 }             
+                  
+                 #player1status, #player2status, #player3status, #player4status {
+                     height: 58%;
+                     width: 74.6488%;
+                     float: right;
+                     padding-top: 6px;
+                 }
+              
+                 #fieldgroup1_1, #fieldgroup1_2 {
+                    width: 10px;
+                    height: 10px;
+                    background-color: purple;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup2_1, #fieldgroup2_2, #fieldgroup2_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: lightskyblue;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup3_1, #fieldgroup3_2, #fieldgroup3_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: #ff00cc;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup4_1, #fieldgroup4_2, #fieldgroup4_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: orange;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup5_1, #fieldgroup5_2, #fieldgroup5_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    margin: 2px;
+                    float: left;
+                 }
+                 #fieldgroup6_1, #fieldgroup6_2, #fieldgroup6_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: yellow;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup7_1, #fieldgroup7_2, #fieldgroup7_3 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: green;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup8_1, #fieldgroup8_2 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: blue;
+                    margin: 2px;
+                    float: left;
+                 }
+                  #fieldgroup9_1, #fieldgroup9_2, #fieldgroup9_3, #fieldgroup9_4 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: black;
+                    margin: 2px;
+                    float: left;
+                 }
+                   #fieldgroup10_1, #fieldgroup10_2 {
+                     width: 10px;
+                    height: 10px;
+                    background-color: grey;
+                    margin: 2px;
+                    float: left;
+                 }
+		</style>
+		</head>
+		<body>
+		<!-- <img id="SpieleFeldBild" src="spielfeldbeta.jpg" style="height: 500px; width: 500px;"> -->
+		<div id="Container">
+		<div id="SpielFeld" style="overflow: hidden; width: 500px; height: 500px;">
+		
+		<div id="TopSpielFeldReihe">
+		<div id="Feld0"></div><div id="Feld1"><div id="Feld1_Hotel"></div></div><div id="Feld2"></div><div id="Feld3"><div id="Feld3_Hotel"></div></div><div id="Feld4"><div id="Feld4_Hotel"></div></div>
+		<div id="Feld5"></div><div id="Feld6"><div id="Feld6_Hotel"></div></div><div id="Feld7"><div id="Feld7_Hotel"></div></div><div id="Feld8"></div><div id="Feld9"><div id="Feld9_Hotel"></div></div><div id="Feld10"></div>
+		</div>
+		<!-- Öffne neuen Container -->
+		<div id="LeftSpielFeldReihe">
+			<div id="Feld11"><div id="Feld11_Hotel"></div></div><div id="Feld12"><div id="Feld12_Hotel"></div></div><div id="Feld13"></div><div id="Feld14"><div id="Feld14_Hotel"></div></div>
+		<div id="Feld15"></div><div id="Feld16"><div id="Feld16_Hotel"></div></div><div id="Feld17"><div id="Feld17_Hotel"></div></div><div id="Feld18"><div id="Feld18_Hotel"></div></div><div id="Feld19"><div id="Feld19_Hotel"></div></div><div id="Feld20"></div>
+		</div>
+		
+		<div id="Zwischenablage"></div>
+		<div id="RightSpielFeldReihe">
+			<div id="Feld31"><div id="Feld31_Hotel"></div></div><div id="Feld32"><div id="Feld32_Hotel"></div></div><div id="Feld33"></div><div id="Feld34"><div id="Feld34_Hotel"></div></div>
+		<div id="Feld35"></div><div id="Feld36"></div><div id="Feld37"><div id="Feld37_Hotel"></div></div><div id="Feld38"></div><div id="Feld39"><div id="Feld39_Hotel"></div></div>
+		</div>
+		
+		<div id="BottomSpielFeldReihe">
+			<div id="Feld21"><div id="Feld21_Hotel"></div></div><div id="Feld22"><div id="Feld22_Hotel"></div></div><div id="Feld23"></div><div id="Feld24"><div id="Feld24_Hotel"></div></div>
+		<div id="Feld25"></div><div id="Feld26"></div><div id="Feld27"><div id="Feld27_Hotel"></div></div><div id="Feld28"></div><div id="Feld29"><div id="Feld29_Hotel"></div></div><div id="Feld30"></div>
+		</div>
+		
+		</div>
+		
+		
+		<div class="UserListOnline">
+                    <div id="player1feld">
+                        <div id="player1image"> xXx</div>
+                        <div id="player1name">p1
+                            </div><div id="player1money">$ 1500</div>
+                        <div id="player1status">
+                            <div id="fieldgroup1_1"></div><div id="fieldgroup1_2"></div>
+                            <div id="fieldgroup2_1"></div><div id="fieldgroup2_2"></div><div id="fieldgroup2_3"></div>
+                            <div id="fieldgroup3_1"></div><div id="fieldgroup3_2"></div><div id="fieldgroup3_3"></div>
+                            <div id="fieldgroup4_1"></div><div id="fieldgroup4_2"></div><div id="fieldgroup4_3"></div>
+                            <div id="fieldgroup5_1"></div><div id="fieldgroup5_2"></div><div id="fieldgroup5_3"></div>
+                            <div id="fieldgroup6_1"></div><div id="fieldgroup6_2"></div><div id="fieldgroup6_3"></div>
+                            <div id="fieldgroup7_1"></div><div id="fieldgroup7_2"></div><div id="fieldgroup7_3"></div>
+                            <div id="fieldgroup8_1"></div><div id="fieldgroup8_2"></div>
+                            <div id="fieldgroup9_1"></div><div id="fieldgroup9_2"></div><div id="fieldgroup9_3"></div><div id="fieldgroup9_4"></div>
+                            <div id="fieldgroup10_1"></div><div id="fieldgroup10_2"></div>
+                        </div>
+                    </div>
+                     <div id="player2feld">
+                        <div id="player2image"></div>
+                        <div id="player2name">p2
+                        </div><div id="player2money">$ 1500</div>
+                        <div id="player2status"></div>
+                    </div>
+                    <div id="player3feld">
+                        <div id="player3image"></div>
+                        <div id="player3name">p3
+                        </div><div id="player3money">$ 1500</div>
+                        <div id="player3status"></div>
+                    </div>
+                    <div id="player4feld">
+                        <div id="player4image"></div>
+                        <div id="player4name">p4
+                        </div><div id="player4money">$ 1500</div>
+                        <div id="player4status"></div>
+                    </div>
+            <div id="usersOnline"></div>
+			
+        </div>
+		<button id="PlayerBuy">Kaufen</button>
+		<button id="PlayerBuyExit">Nicht Kaufen</button>
+		<button id="Kaution">Kaution</button>
+		<button id="reroll">Nochmal würfeln</button>
+		
+		<div id="menu">
+<button id="StartEvent">Start</button><button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
+		</div>
+           <div class="chatdiv">
+        <div id="chat" style="float: left; height:300px; width: 500px; border: 1px solid silver; overflow: scroll;"></div>
+        <form id="send-form">
+        <input id="message">
+        <input type="submit">
+        </form></div>
+        
+		</div>
+		</body>
+</html>
+<script>
+         jQuery(function($){
+		 var $usersOnline = $('#usersOnline');
+		 var player1name = $('#player1name');
+                 var player2name = $('#player2name');
+                 var player3name = $('#player3name');
+                 var player4name = $('#player4name');
+		 var $form = $('#send-form');
+         var $message = $('#message');
+         var $chatbox = $('#chat');
+		 var socket = io.connect();
+		 $('#roll').click(function(){
+			socket.emit('roll');
+		 });
+		$('#StartEvent').click(function(){
+			socket.emit('StartEvent');
+		});
+		$('#PlayerBuy').click(function(){
+				socket.emit('PlayerBuySend');
+		});
+		$('#PlayerBuyExit').click(function(){
+				socket.emit('PlayerBuyExit');
+		});
+		$('#Kaution').click(function(){
+			socket.emit('Kaution');
+		});
+		$('#reroll').click(function(){
+			socket.emit('reroll');
+		});
+		$form.submit(function(e){
+                e.preventDefault();
+                socket.emit('Data', $message.val(), function(data){
+                 $chatbox.append('<span class="error"><b>'+ data + '<span></br>');
+                //socket.emit('Ressource', $Ressource.html());
+                // Var A wird um + erhöht, übergabe P2 ist falsch...
+                });
+                //$("#chat").scrollTop($("#chat")[0].scrollHeight);
+                $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                $message.val('');
+                //Server sendet hier wirde empfangen (Socket.on)
+                //Chat Socket
+		});
+				/*socket.on('MemberList', function(data){
+				console.log(data.length);
+				for(x=0; x<data.length; x++) {
+                     $("#UserList").append(data[x] + '</br>');
+					}                     
+                });*/
+				socket.on('StartTheGame', function(PlayerNames){
+					var html = '';
+                   for(i=0; i < PlayerNames.length; i++){
+                       html += PlayerNames[i] + '</br>';
+                   }
+					$('#Feld30').html(html);
+				});
+				socket.on('Movment', function(PlayerNames, FeldName){
+					var FeldWert = $(FeldName).html();
+					
+					$(FeldName).html('<p>'+PlayerNames+'</p>'+FeldWert);
+				});
+				socket.on('PositionDeleter', function(Spieler , FeldName){
+					console.log(FeldName);
+					var FeldWert = $(FeldName).html();
+					console.log(FeldWert);
+					Deleter = FeldWert.replace(Spieler, "");
+					console.log(Deleter);
+					$(FeldName).html(Deleter);
+				});
+				socket.on('usernamesOnline', function(data, SpielerReihenFolge){
+                   var html = '';
+                   for(i=0; i < data.length; i++){
+                       html += data[i] + '</br>';
+                   }
+                   //$usersOnline.html(html);
+                   player1name.html(data[0]);
+                   player2name.html(data[1]);
+                   player3name.html(data[2]);
+                   player4name.html(data[3]);
+                });
+				
+				socket.on('ServerMessege', function(data){
+                     $chatbox.append('<span style="color: red;">'+data+'</span></br>');
+                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+                socket.on('message', function(data){
+                     $chatbox.append('<span class="msg"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
+                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+                socket.on('whisper', function(data){
+                    $chatbox.append('<span class="whisper"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
+                    $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+				socket.on('PlayerCashClient', function(PlayerCash, PlayerRang, Reihenfolge, PlayerName){
+					//Reihenfolge - gibt das array mit der playerreihenfolge! 
+					//Reihenfolge[0] = spieler 1
+					//Prüfe ob die Reihenfolge korrekt ist! 
+					console.log(PlayerRang);
+					if(PlayerRang == 1){
+						$('#player1money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 2){
+						$('#player2money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 3){
+						$('#player3money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 4){
+						$('#player4money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 5){
+						$('#player5money').html("$ "+PlayerCash);
+					}
+					//socket.emit('PlayerCashClient', socket.PlayerCash, MPQ, PlayerRang);
+					
+                   /*$('player1money').html(PlayerCash);*/
+                });
+				
+			$('#SpielFeld').on('mousewheel MozMousePixelScroll', function (event) {
+			var delta = event.originalEvent.wheelDelta * -1
+                  || event.originalEvent.detail;
+			if(delta < 0){
+			//Je nach dem wie man den Wert addiert müssten die Div Felder auf die entsprechene grösse angepast werden.
+				var SpielFeldHoehe = $( "#SpielFeld" ).css("height");
+				SpielFeldHoehe = SpielFeldHoehe.replace("px", "");
+				var SpielFeldHoehe = parseInt( SpielFeldHoehe );
+				console.log(SpielFeldHoehe);
+				if(SpielFeldHoehe < 2000){
+					SpielFeldHoehe += 4; 
+					$( "#SpielFeld" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpielFeld" ).width( SpielFeldHoehe ).css("width");
+					$( "#SpieleFeldBild" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpieleFeldBild" ).width( SpielFeldHoehe ).css("width");
+					console.log('scroll up');
+				}
+			} else {
+				var SpielFeldHoehe = $( "#SpielFeld" ).css("height");
+				SpielFeldHoehe = SpielFeldHoehe.replace("px", "");
+				var SpielFeldHoehe = parseInt( SpielFeldHoehe );
+				console.log(SpielFeldHoehe);
+				if(SpielFeldHoehe > 500){
+					SpielFeldHoehe -= 4;
+					$( "#SpielFeld" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpielFeld" ).width( SpielFeldHoehe ).css("width");
+					$( "#SpieleFeldBild" ).height( SpielFeldHoehe ).css("height");
+					$( "#SpieleFeldBild" ).width( SpielFeldHoehe ).css("width");
+					console.log('scroll Down');
+				}
+			}
+});
+		 });	
+</script>
