@@ -335,8 +335,10 @@
             <div id="usersOnline"></div>
 			
         </div>
-		
-	
+		<button id="PlayerBuy">Kaufen</button>
+		<button id="PlayerBuyExit">Nicht Kaufen</button>
+		<button id="Kaution">Kaution</button>
+		<button id="reroll">Nochmal würfeln</button>
 		
 		<div id="menu">
 <button id="StartEvent">Start</button><button id="roll">Würfeln</button><button id="build">Bauen</button><button id="trade">Handeln</button><button id="hypothek">Hypothek</button><button id="rebuy">Auslösen</button><button id="options">Optionen</button>
@@ -365,9 +367,21 @@
 		 $('#roll').click(function(){
 			socket.emit('roll');
 		 });
-		 $('#StartEvent').click(function(){
+		$('#StartEvent').click(function(){
 			socket.emit('StartEvent');
-		 });
+		});
+		$('#PlayerBuy').click(function(){
+				socket.emit('PlayerBuySend');
+		});
+		$('#PlayerBuyExit').click(function(){
+				socket.emit('PlayerBuyExit');
+		});
+		$('#Kaution').click(function(){
+			socket.emit('Kaution');
+		});
+		$('#reroll').click(function(){
+			socket.emit('reroll');
+		});
 		$form.submit(function(e){
                 e.preventDefault();
                 socket.emit('Data', $message.val(), function(data){
@@ -407,7 +421,7 @@
 					console.log(Deleter);
 					$(FeldName).html(Deleter);
 				});
-				socket.on('usernamesOnline', function(data){
+				socket.on('usernamesOnline', function(data, SpielerReihenFolge){
                    var html = '';
                    for(i=0; i < data.length; i++){
                        html += data[i] + '</br>';
@@ -420,7 +434,7 @@
                 });
 				
 				socket.on('ServerMessege', function(data){
-                     $chatbox.append(data+'<span></br>');
+                     $chatbox.append('<span style="color: red;">'+data+'</span></br>');
                      $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
                 });
                 socket.on('message', function(data){
@@ -430,6 +444,26 @@
                 socket.on('whisper', function(data){
                     $chatbox.append('<span class="whisper"><b>'+ data.nick + '</b>: ' + data.msg + '<span></br>');
                     $("#chat").animate({scrollTop:$("#chat")[0].scrollHeight}, 500);
+                });
+				socket.on('PlayerCashClient', function(PlayerCash, PlayerRang, Reihenfolge, PlayerName){
+					//Reihenfolge - gibt das array mit der playerreihenfolge! 
+					//Reihenfolge[0] = spieler 1
+					//Prüfe ob die Reihenfolge korrekt ist! 
+					console.log(PlayerRang);
+					if(PlayerRang == 1){
+						$('#player1money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 2){
+						$('#player2money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 3){
+						$('#player3money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 4){
+						$('#player4money').html("$ "+PlayerCash);
+					}else if(PlayerRang == 5){
+						$('#player5money').html("$ "+PlayerCash);
+					}
+					//socket.emit('PlayerCashClient', socket.PlayerCash, MPQ, PlayerRang);
+					
+                   /*$('player1money').html(PlayerCash);*/
                 });
 				
 			$('#SpielFeld').on('mousewheel MozMousePixelScroll', function (event) {
