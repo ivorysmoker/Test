@@ -16,8 +16,13 @@ var express = require('express'),
 	//Bitte KostenMap anpassen danke!
 	//erreignise erstellen ErreignisKarten["Dies schickt dich auf ein neues Feld"] etc. etc.
 	//erreignise erstellen KistenKarten["Dies added 100 dollar"] etc. etc.
+<<<<<<< HEAD
 	EreignisKarten = ["Du kommst aus dem Gef‰ngnis frei.", "R¸cke vor bis zum Gerichtsgeb‰ude.", "R¸cke vor bis zur Reinigung.", "R¸cke vor bis zur Tankstelle.", "R¸cke vor bis zur Oper.", "R¸cke vor bis zum Steueramt.", "R¸cke vor bis zum n‰chsten Bahnhof.", "R¸cke vor bis zum Aldli.", "Du erbst $200.", "Arztkosten. Zahle $200.", "Einkommensteuer-R¸ckzahlung. Ziehe $200 ein.", "Jahreswechsel. Renoviere alle H‰user und Hotels. Zahle pro Haus $100 und pro Hotel $200." ];
 	KistenKarten = ["Du kommst aus dem Gef‰ngnis frei.", "Du hast deine Steuerschulden noch nicht beglichen. Gehe sofort ins Gef‰ngnis!", "Arztkosten. Zahle $ 100", "Es ist dein Geburtstag. Ziehe von jedem Spieler $100 ein.", "Die Jahresrente wird f‰llig. Ziehe $200 ein.", "Du erbst $200.", "Einkommensteuer-R¸ckzahlung. Ziehe $200 ein.", "Du hast den 2. Preis bei einem Schˆnheitswettbewerb gewonnen. Ziehe $50 ein.", "R¸cke vor bis auf Los und ziehe $200 ein.", "Dein Reiseunternehmen l‰uft gut. Ziehe $200 ein.", "Jahreswechsel. Renoviere alle H‰user und Hotels. Zahle pro Haus $100 und pro Hotel $200.", "Die Steuern werden f‰llig. Zahle $200."];
+=======
+	ErreignisKarten = [];
+	KistenKarten = [];
+>>>>>>> 9fa2bfecd6d0dbdd5a3933beb71195e77ed821ab
 	KostenMap = [00000, 60, 000, 60, 00, 200, 100, 000, 100, 120, 0, 140, 150, 140, 160, 200, 180, 000, 180, 200, 00000, 220, 0, 220, 240, 200, 260, 260, 150, 280, 0000, 300, 300, 000, 320, 200, 0, 350, 200, 400];
 	NamenMap = ["Los", "Kiosk", "Gemeinschaftsfeld", "Reinigung", "Einkommensteuer", "S√ºd-Bahnhof", "Tabakladen", "Ereignisfeld", "Getr√§nkemarkt", "Restaurant", "Knast", "M√ºll Deponie" , "Elektrizit√§tswerk" , "Tankstelle" , "Waschanlage", "West-Bahnhof", "Lidli", "Gemeinschaftsfeld", "Aldli", "Metrio", "Frei parken", "Theater", "Ereignisfeld", "Oper", "Museum", "Nord-Bahnhof", "Tennisplatz", "Spielehalle", "Wasserwerk" , "Fussballfeld", "Gehe ins Gef√§ngnis", "Rathhausplatz", "Steueramt", "Gemeinschaftsfeld", "Zollamt" ,"Hauptbahnhof", "Ereignisfeld", "Gerichtsgeb√§ude", "Monopoly Steuer", "Juwelier"];
 	GekaufeArtikelNummer = [];
@@ -395,22 +400,36 @@ socket.on('roll', function(){
 			}else{
 			console.log('Erreignis Feld, Zahlungsfeld, oder Kisten Feld gef√§gnis, freiparken');
 				if(KostenMap[FeldPosNumber] == 0){
+<<<<<<< HEAD
                                     num3 = Math.floor((Math.random() * EreignisKarten.length) + 1);                                     
 					io.sockets.emit('ServerMessege', 'Ereignisfeld: '+EreignisKarten[num3]);
                                                                              
 				}else if(KostenMap[FeldPosNumber] == 00){					
 					socket.PlayerCash = socket.PlayerCash - 200; //vorest fixxierter Preis!
 					io.sockets.emit('ServerMessege', 'Der Spieler zahlt: $200 an die Bank.');
+=======
+					io.sockets.emit('ServerMessege', 'Ereignisfeld ausgel√∂st: ');
+				}else if(KostenMap[FeldPosNumber] == 00){
+					io.sockets.emit('ServerMessege', 'Zahlunsfeld ausgel√∂st: ');
+					socket.PlayerCash = socket.PlayerCash - 100; //vorest fixxierter Preis!
+					io.sockets.emit('ServerMessege', 'Der Spieler zahlt: $100 an die Bank.');
+>>>>>>> 9fa2bfecd6d0dbdd5a3933beb71195e77ed821ab
 					var AnzeigeBenutzer = BenutzerReihenFolgeMax.length;
 					io.sockets.emit('PlayerCashClient', socket.PlayerCash, AnzeigeBenutzer);
 					//kommt dieser betrag zu Freiparken?
 				}else if(KostenMap[FeldPosNumber] == 000){
+<<<<<<< HEAD
                                        num3 = Math.floor((Math.random() * KistenKarten.length) + 1);    
 					io.sockets.emit('ServerMessege', 'Gemeinschaftsfeld: '+KistenKarten[num3]);
 				}else if(KostenMap[FeldPosNumber] == 0000){
 					io.sockets.emit('ServerMessege', socket.nickname+' geht ins Gef‰ngnis.');
                                         socket.inJail = 1;				
 				        io.sockets.emit('Movment', socket.nickname , KartenMap[10]);
+=======
+					io.sockets.emit('ServerMessege', 'Kistenfeld ausgel√∂st: ');
+				}else if(KostenMap[FeldPosNumber] == 0000){
+					io.sockets.emit('ServerMessege', 'Gef√§ngnis ausgel√∂st: ');
+>>>>>>> 9fa2bfecd6d0dbdd5a3933beb71195e77ed821ab
 					//Schicke PlayerPos zu gef√§gnis.
 					//Rufe die Next Player function auf.
 					//Am anfang eines zuges muss gepr√ºft werden ob sich dieser spieler in jail befindet. bsp if(socket.jail = 1 ... (socket.jail muss exisiteren!
